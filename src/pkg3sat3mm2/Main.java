@@ -5,8 +5,11 @@
  */
 package pkg3sat3mm2;
 
+import data.Datos;
 import data.Individuo;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -18,17 +21,15 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        int genotipo[] = new int[]{1,0,0,1,1};
-        ArrayList<Integer[]> cla = new ArrayList<>();
-        Integer[] c1 = new Integer[]{1,3,4};
-        Integer[] c2 = new Integer[]{-1,2,3};
-        Integer[] c3 = new Integer[]{-3,4,1};
-        cla.add(c1);
-        cla.add(c2);
-        cla.add(c3);
-        Individuo.clausulas = cla;
-        Individuo i = new Individuo(genotipo);
-        System.out.println(i.getFitness());
+        try {
+            Datos datos = Herramientas.obtenerDatos();
+            Individuo.clausulas = datos.getCláusulas();
+            GeneticoV1 gen = new GeneticoV1(35, 100000, 0.35);
+            gen.evolucionar();
+            System.out.println();
+        } catch (Exception ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }
     
